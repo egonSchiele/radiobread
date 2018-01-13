@@ -14,7 +14,9 @@ class Radiobread
       divided = []
       dict = dictionary.keys.map(&:downcase).sort_by(&:length).reverse
       found_word = true
-      while text != "" && found_word
+
+      suffixes = ["les", "ly"]
+      while !suffixes.include?(text) && found_word
         chosen_word = ""
         dict.each do |word|
           if text[0, word.size] == word
@@ -26,7 +28,16 @@ class Radiobread
         divided << chosen_word
         found_word = (chosen_word != "")
       end
-      divided
+      if text == ""
+        return divided
+      else
+        if suffixes.include?(text)
+          divided << text
+          return divided
+        else
+          return [text]
+        end
+      end
     end
 
     def reverse_dictionary
