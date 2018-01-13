@@ -3,7 +3,30 @@
 class Radiobread
   class << self
     def words text
-      text.split(/\s+/)
+      words_ = text.split(/\s+/)
+      words_.map do |word|
+        divide word
+      end
+    end
+
+    def divide text
+      text = text.dup
+      divided = []
+      dict = dictionary.keys.map(&:downcase).sort_by(&:length).reverse
+      found_word = true
+      while text != "" && found_word
+        chosen_word = ""
+        dict.each do |word|
+          if text[0, word.size] == word
+            chosen_word = word
+            break
+          end
+        end
+        text.gsub!(chosen_word, "")
+        divided << chosen_word
+        found_word = (chosen_word != "")
+      end
+      divided
     end
 
     def reverse_dictionary
@@ -16,7 +39,7 @@ class Radiobread
         line.chomp!
         (word, *phonemes) = line.split(/  ?/)
         next unless @foods.include?(word.downcase) || @plural_foods.include?(word.downcase)
-        phonemes = phonemes.reverse.take(3).reverse
+        phonemes = phonemes.reverse.take(2).reverse
         @reverse_dictionary[phonemes] ||= []
         @reverse_dictionary[phonemes] << word
       end
@@ -30,7 +53,7 @@ class Radiobread
         next if line !~ /^[A-Z]/
         line.chomp!
         (word, *phonemes) = line.split(/  ?/)
-        @dictionary[word] = phonemes.reverse.take(3).reverse
+        @dictionary[word] = phonemes.reverse.take(2).reverse
       end
       @dictionary
     end

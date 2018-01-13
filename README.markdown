@@ -14,5 +14,4 @@ ruby main.rb
 ## More things to try
 
 - Expand the [list of bands](https://github.com/egonSchiele/radiobread/blob/master/lib/radiobread/bands.txt).
-- Break words into syllables. Sadly "Radiohead" won't convert to "Radiobread" right now.
 - Handle plurals of foods better (I just append an 's' to everything).
