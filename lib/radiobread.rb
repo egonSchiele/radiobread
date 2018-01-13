@@ -39,7 +39,7 @@ class Radiobread
         line.chomp!
         (word, *phonemes) = line.split(/  ?/)
         next unless @foods.include?(word.downcase) || @plural_foods.include?(word.downcase)
-        phonemes = phonemes.reverse.take(2).reverse
+        phonemes = phonemes.reverse.take(3).reverse
         @reverse_dictionary[phonemes] ||= []
         @reverse_dictionary[phonemes] << word
       end
@@ -53,7 +53,7 @@ class Radiobread
         next if line !~ /^[A-Z]/
         line.chomp!
         (word, *phonemes) = line.split(/  ?/)
-        @dictionary[word] = phonemes.reverse.take(2).reverse
+        @dictionary[word] = phonemes.reverse.take(3).reverse
       end
       @dictionary
     end
