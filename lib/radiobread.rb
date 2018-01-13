@@ -50,7 +50,7 @@ class Radiobread
         line.chomp!
         (word, *phonemes) = line.split(/  ?/)
         next unless @foods.include?(word.downcase) || @plural_foods.include?(word.downcase)
-        last_vowel_phoneme = phonemes.rindex do |ph|
+        last_vowel_phoneme = phonemes[0, phonemes.size - 1].rindex do |ph|
           ph =~ /^[AEIOU]/
         end
         next unless last_vowel_phoneme
@@ -68,7 +68,8 @@ class Radiobread
         next if line !~ /^[A-Z]/
         line.chomp!
         (word, *phonemes) = line.split(/  ?/)
-        last_vowel_phoneme = phonemes.rindex do |ph|
+        # size - 1 because otherwise the last phoneme might be a vowel one, which gives crappy results
+        last_vowel_phoneme = phonemes[0, phonemes.size - 1].rindex do |ph|
           ph =~ /^[AEIOU]/
         end
         next unless last_vowel_phoneme
