@@ -50,7 +50,11 @@ class Radiobread
         line.chomp!
         (word, *phonemes) = line.split(/  ?/)
         next unless @foods.include?(word.downcase) || @plural_foods.include?(word.downcase)
-        phonemes = phonemes.reverse.take(3).reverse
+        last_vowel_phoneme = phonemes.rindex do |ph|
+          ph =~ /^[AEIOU]/
+        end
+        next unless last_vowel_phoneme
+        phonemes = phonemes[last_vowel_phoneme, phonemes.length]
         @reverse_dictionary[phonemes] ||= []
         @reverse_dictionary[phonemes] << word
       end
@@ -64,7 +68,12 @@ class Radiobread
         next if line !~ /^[A-Z]/
         line.chomp!
         (word, *phonemes) = line.split(/  ?/)
-        @dictionary[word] = phonemes.reverse.take(3).reverse
+        last_vowel_phoneme = phonemes.rindex do |ph|
+          ph =~ /^[AEIOU]/
+        end
+        next unless last_vowel_phoneme
+        phonemes = phonemes[last_vowel_phoneme, phonemes.length]
+        @dictionary[word] = phonemes
       end
       @dictionary
     end
