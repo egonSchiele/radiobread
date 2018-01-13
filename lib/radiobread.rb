@@ -6,7 +6,7 @@ class Radiobread
       words_ = text.split(/\s+/)
       words_.map do |word|
         divide word
-      end
+      end.flatten
     end
 
     def divide text
